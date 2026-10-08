@@ -2,27 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Session feedback</title>
 <style>
   :root {
-    --bg:#f4f1ea; --card:#ffffff; --ink:#14213d; --muted:#6b7280; --line:#ece8df;
-    --star-off:#e3dfd3; --star-on:#e0a100; --accent:#14213d; --accent-ink:#ffffff; --err:#b42318;
-    --shadow:0 1px 2px rgba(20,33,61,.06), 0 12px 32px rgba(20,33,61,.10);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#0f1524; --card:#18213a; --ink:#f3f1ea; --muted:#9aa3b8; --line:#273252;
-            --star-off:#33405f; --star-on:#f2b705; --accent:#f2b705; --accent-ink:#14213d;
-            --shadow:0 12px 32px rgba(0,0,0,.4); }
+    --bg:transparent; --card:#faf7f0; --ink:#14213d; --muted:#5b6475; --line:#e4dcc9;
+    --star-off:#d5cdb8; --star-on:#e0a100; --accent:#14213d; --accent-ink:#ffffff; --err:#b42318;
+    --shadow:0 1px 2px rgba(20,33,61,.08), 0 10px 28px rgba(20,33,61,.12);
   }
   * { box-sizing:border-box; }
   html,body { margin:0; }
-  body { padding:24px 16px; background:var(--bg); color:var(--ink);
+  body { padding:4px 2px 12px; background:transparent; color:var(--ink);
          font:16px/1.5 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  .card { max-width:560px; margin:0 auto; background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:28px 28px 24px; }
+  .card { max-width:none; margin:0; background:transparent; padding:0; }
   .eyebrow { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--star-on); margin:0 0 6px; }
   .logo { display:block; height:30px; width:auto; margin:0 0 18px; mix-blend-mode:multiply; }
-  @media (prefers-color-scheme: dark) { .logo { filter:invert(1); mix-blend-mode:screen; } }
   h1 { font-size:24px; line-height:1.25; margin:0 0 6px; letter-spacing:-.01em; }
   .sub { margin:0 0 22px; color:var(--muted); font-size:14px; }
 
@@ -64,7 +59,7 @@
   .tick svg { width:32px; height:32px; stroke:#14213d; stroke-width:3.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
   .thanks h2 { margin:0 0 4px; font-size:22px; }
   .thanks p { margin:0; color:var(--muted); }
-  @media (max-width:420px) { .card { padding:22px 18px 20px; } .rate { padding-left:0; } .stars label svg { width:40px; height:40px; } }
+  @media (max-width:420px) { .rate { padding-left:0; } .stars label svg { width:40px; height:40px; } }
 </style>
 </head>
 <body>

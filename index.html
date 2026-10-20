@@ -120,7 +120,7 @@
               `<label for="${name}-${v}" data-v="${v}">${STAR}</label>`;
     }
     stars.innerHTML = html;
-    const show = (v) => { word.textContent = v ? `${v} · ${WORDS[v]}` : "Tap a star"; };
+    const show = (v) => { word.textContent = v ? `${v} ¬∑ ${WORDS[v]}` : "Tap a star"; };
     stars.addEventListener("mouseover", (e) => { const l = e.target.closest("label"); if (l) show(+l.dataset.v); });
     stars.addEventListener("mouseleave", () => show(answers[name]));
     stars.addEventListener("change", (e) => {
@@ -134,8 +134,22 @@
     e.preventDefault();
     err.hidden = true;
     if (!ENDPOINT) { err.textContent = "This poll isn't connected to a sheet yet. Set ENDPOINT in the page source."; err.hidden = false; return; }
-    const data = { ...ctx, ...answers, comments: form.comments.value.trim(), submitted_at: new Date().toISOString() };
-    btn.disabled = true; btn.textContent = "Sending…";
+    // Date and time are captured automatically at the moment of submission (never taken from the link),
+    // in the session city's own timezone, so they can be written straight to the sheet.
+    const TZ = { SIN: "Asia/Singapore", SGP: "Asia/Singapore", MEL: "Australia/Melbourne", SYD: "Australia/Sydney",
+                 BRI: "Australia/Brisbane", ADE: "Australia/Adelaide", PER: "Australia/Perth", AKL: "Pacific/Auckland" };
+    const city = ((ctx.session || "").toUpperCase().match(/\b(SIN|SGP|MEL|SYD|BRI|ADE|PER|AKL)\b/) || [])[1];
+    const now  = new Date();
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+      timeZone: TZ[city] || undefined, year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
+    }).formatToParts(now).map(p => [p.type, p.value]));
+    const data = { ...ctx, ...answers, comments: form.comments.value.trim(),
+                   date: `${parts.year}-${parts.month}-${parts.day}`,
+                   time: `${parts.hour}:${parts.minute}:${parts.second}`,
+                   timezone: TZ[city] || Intl.DateTimeFormat().resolvedOptions().timeZone,
+                   submitted_at: now.toISOString() };
+    btn.disabled = true; btn.textContent = "Sending‚Ä¶";
     try {
       // text/plain + no-cors avoids a CORS preflight, which Apps Script doesn't answer.
       await fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });

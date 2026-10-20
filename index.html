@@ -120,7 +120,7 @@
               `<label for="${name}-${v}" data-v="${v}">${STAR}</label>`;
     }
     stars.innerHTML = html;
-    const show = (v) => { word.textContent = v ? `${v} ¬∑ ${WORDS[v]}` : "Tap a star"; };
+    const show = (v) => { word.textContent = v ? `${v} \u00b7 ${WORDS[v]}` : "Tap a star"; };
     stars.addEventListener("mouseover", (e) => { const l = e.target.closest("label"); if (l) show(+l.dataset.v); });
     stars.addEventListener("mouseleave", () => show(answers[name]));
     stars.addEventListener("change", (e) => {
@@ -149,7 +149,7 @@
                    time: `${parts.hour}:${parts.minute}:${parts.second}`,
                    timezone: TZ[city] || Intl.DateTimeFormat().resolvedOptions().timeZone,
                    submitted_at: now.toISOString() };
-    btn.disabled = true; btn.textContent = "Sending‚Ä¶";
+    btn.disabled = true; btn.textContent = "Sending\u2026";
     try {
       // text/plain + no-cors avoids a CORS preflight, which Apps Script doesn't answer.
       await fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
